@@ -24,7 +24,7 @@ __version__ = "0.0.1"
 from benchmark_tasks.zero_shot.zero_shot_schema_gpt import run_zero_gpt
 from benchmark_tasks.few_shot.few_shot_schema_gpt import run_few_gpt
 from benchmark_tasks.few_shot.few_shot_schema_t5 import run_few_flan_t5
-from benchmark_tasks.few_shot.few_shot_schema_llama import run_few_llama
+# from benchmark_tasks.few_shot.few_shot_schema_llama import run_few_llama
 from benchmark_tasks.finetune.finetune_schema_flan_t5 import run_finetune_flan_t5
 from benchmark_tasks.rltf.rltf_schema_flan_t5 import run_rltf_flan_t5
 

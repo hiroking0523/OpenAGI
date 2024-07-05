@@ -119,7 +119,7 @@ def run_few_flan_t5(args):
                                   task_description +\
                                   "\nSolution: ",\
                                   return_tensors="pt").input_ids  # Batch size 1 
-            outputs = flan_t5.generate(input_ids.to(device), min_length=5, max_length=100)
+            outputs = flan_t5.generate(input_ids.to(llm_device), min_length=5, max_length=100)
             flan_t5_output = tokenizer.decode(outputs[0], skip_special_tokens=True)
             flan_t5_steps = flan_t5_output.split(", " )
 

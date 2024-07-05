@@ -9,3 +9,13 @@ generated_poems/
 generated_music/
 
 ./UI/.env*.local
+
+#add by nishi
+myenv/
+.python-version
+data/
+cache/
+benchmark_tasks/
+models/
+output/
+wandb/

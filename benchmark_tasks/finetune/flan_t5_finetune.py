@@ -51,7 +51,7 @@ def load_data(args):
     with open("finetune_train.json", "w") as f:
         json.dump(data[: args.num_train], f)
 
-    tokenizer = T5Tokenizer.from_pretrained(args.model_name)
+    tokenizer = T5Tokenizer.from_pretrained(args.model_name, model_max_length=1024)
 
     class InputDataset(Dataset):
         def __init__(self, data):
@@ -85,10 +85,10 @@ def train(args, logger):
     
     logger.log("load model")
     model = T5ForConditionalGeneration.from_pretrained(args.model_name).to(args.device)
-    generate_with_grad = undecorated(model.generate)
-    model.generate_with_grad = MethodType(generate_with_grad, model)
+    # generate_with_grad = undecorated(model.generate)
+    # model.generate_with_grad = MethodType(generate_with_grad, model)
 
-    tokenizer = T5Tokenizer.from_pretrained(args.model_name)
+    tokenizer = T5Tokenizer.from_pretrained(args.model_name, model_max_length=1024)
     train_loader, test_loader = load_data(args)
     optimizer, scheduler = construct_optimizer(args, model, 20)
 
@@ -145,6 +145,7 @@ def train(args, logger):
                 print(predicted_sequence)
                 accurate += 1
             total += 1
+        print("total", total)
         accuracy = accurate / total
         logger.log("accuracy is {} in epoch {}".format(accuracy, e))
         data = [(q, g, p) for q, g, p in zip(questions, targets, predictions)]
@@ -168,12 +169,12 @@ if __name__ == "__main__":
     parser.add_argument("--seed", type=int, default=42)
     parser.add_argument("--logging_dir", type=str, default="toy.log")
     parser.add_argument("--model_name", type=str, default="t5-large")
-    parser.add_argument("--prompt_dir", type=str, default="../train_task_description.txt")
-    parser.add_argument("--answer_dir", type=str, default="../train_model_sequence.txt")
+    parser.add_argument("--prompt_dir", type=str, default="./benchmark_tasks/finetune/openagi_data/task_description.txt")
+    parser.add_argument("--answer_dir", type=str, default="./benchmark_tasks/finetune/openagi_data/train_model_sequence.txt")
 
     parser.add_argument("--toy", action="store_true")
 
-    parser.add_argument("--epochs", type=int, default=200)
+    parser.add_argument("--epochs", type=int, default=3)
     parser.add_argument("--logging_step", type=int, default=10)
     parser.add_argument("--batch_size", type=int, default=8)
     parser.add_argument("--num_seq", type=int, default=1)
@@ -182,7 +183,7 @@ if __name__ == "__main__":
     parser.add_argument("--accumulate_steps", type=int, default=1)
     parser.add_argument("--warm_up_proportion", type=float, default=0.1)
 
-    parser.add_argument("--num_train", type=int, default=10)
+    parser.add_argument("--num_train", type=int, default=13) #trainとtestの少ない方の-2よりも小さい数
 
     args = parser.parse_args()
 

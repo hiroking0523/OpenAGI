@@ -201,7 +201,7 @@ class SeqGen:
         ]
         
         self.device = device
-        self.model = model#.to(self.device)
+        self.model = model.to(self.device)
         self.tokenizer = tokenizer
         
         
@@ -329,7 +329,7 @@ class SeqGen:
         input_ids = self.tokenizer.batch_encode_plus(input_s, padding="longest", return_tensors="pt")["input_ids"]
         input_ids = input_ids.to(self.device)
         prefix_allowed_tokens = self.t5_prefix_allowed_tokens_fn(module_length, constraint=constraint)
-        output = self.model.generate_with_grad(
+        output = self.model.generate(
             input_ids,
             max_length=80,
             min_length=1,

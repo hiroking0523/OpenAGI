@@ -42,7 +42,8 @@ from peft import (
     LoraConfig,
     get_peft_model,
     get_peft_model_state_dict,
-    prepare_model_for_int8_training,
+    # prepare_model_for_int8_training,
+    prepare_model_for_kbit_training,
     set_peft_model_state_dict,
 )
 
@@ -121,7 +122,8 @@ def train(args, logger, max_memory_mapping):
     tokenizer.padding_side = "left"  # Allow batched inference
     
     
-    model = prepare_model_for_int8_training(model)
+    # model = prepare_model_for_int8_training(model)
+    model = prepare_model_for_kbit_training(model)
     
     lora_r = 8
     lora_alpha = 16
@@ -144,7 +146,8 @@ def train(args, logger, max_memory_mapping):
     micro_batch_size = 1
     gradient_accumulation_steps = args.batch_size // micro_batch_size
     val_set_size = 8
-    output_dir = "/common/users/yg334/lora-vicuna/"
+    # output_dir = "/common/users/yg334/lora-vicuna/"
+    output_dir = "./output/"
     group_by_length = False
     # ddp = False
     world_size = int(os.environ.get("WORLD_SIZE", 1))
@@ -198,9 +201,9 @@ if __name__ == "__main__":
     parser.add_argument("--seed", type=int, default=42)
     parser.add_argument("--logging_dir", type=str, default="toy.log")
     parser.add_argument("--model_name", type=str, default="eachadea/vicuna-7b-1.1")
-    parser.add_argument("--cache_dir", type=str, default="/common/users/yg334/LLAMA/huggingface/cache")
-    parser.add_argument("--prompt_dir", type=str, default="train_task_description.txt")
-    parser.add_argument("--answer_dir", type=str, default="train_model_sequence.txt")
+    parser.add_argument("--cache_dir", type=str, default="./cache")
+    parser.add_argument("--prompt_dir", type=str, default="./benchmark_tasks/finetune/openagi_data/task_description.txt")
+    parser.add_argument("--answer_dir", type=str, default="./benchmark_tasks/finetune/openagi_data/train_model_sequence.txt")
 
     parser.add_argument("--toy", action="store_true")
 
@@ -213,7 +216,7 @@ if __name__ == "__main__":
     parser.add_argument("--accumulate_steps", type=int, default=1)
     parser.add_argument("--warm_up_proportion", type=float, default=0.1)
 
-    parser.add_argument("--num_train", type=int, default=15)
+    parser.add_argument("--num_train", type=int, default=150)
 
     args = parser.parse_args()
 

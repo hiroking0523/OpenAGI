@@ -32,7 +32,7 @@ os.environ["SERPAPI_API_KEY"] = "YOUR SEARCH API KEY"
 os.environ["OPENAI_API_KEY"] = "YOUR OPENAI API KEY"
 os.environ['TRANSFORMERS_CACHE'] = "YOUR CACHE DIRECTORY TO STORE HUGGINGFACE TRANSFORMERS"
 
-from api_key import *
+# from api_key import *
 
 # import github_models.colorization.colorizers as colorizers
 # from github_models.colorization.colorizers import *

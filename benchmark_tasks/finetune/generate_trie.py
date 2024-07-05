@@ -308,7 +308,7 @@ def generate_sequence(
         candidates, tokenizer, module_length
     )
     
-    output = model.generate_with_grad(
+    output = model.generate(
         input_ids,
         max_length=80,
         min_length=1,
@@ -379,8 +379,8 @@ if __name__ == "__main__":
     # candidate_trie = Trie([[0] + tokenizer.encode("{}".format(e)) for e in candidates])
     # print(candidate_trie.trie_dict)
 
-    generate_with_grad = undecorated(model.generate)
-    model.generate_with_grad = MethodType(generate_with_grad, model)
+    # generate_with_grad = undecorated(model.generate)
+    # model.generate_with_grad = MethodType(generate_with_grad, model)
 
     input_s = [
         "Given noisy image, how to return the regular image step by step?"

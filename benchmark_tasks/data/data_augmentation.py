@@ -467,9 +467,9 @@ if __name__ == "__main__":
 
     parser = argparse.ArgumentParser()
 
-    parser.add_argument("--device", type=str, default="cuda:3")
-    parser.add_argument("--dir_path", type=str, default="/common/users/yg334")
-    parser.add_argument("--cache_path", type=str, default="/common/users/yg334/LLAMA/huggingface/cache/")
+    parser.add_argument("--device", type=str, default="cuda:1")
+    parser.add_argument("--dir_path", type=str, default="./data/val2017")
+    parser.add_argument("--cache_path", type=str, default="./cache/")
     parser.add_argument("--num_sample", type=int, default=10)
     
     args = parser.parse_args()
