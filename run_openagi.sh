@@ -1,13 +1,14 @@
-export TRANSFORMERS_CACHE="YOUR CACHE DIRECTORY TO STORE HUGGINGFACE TRANSFORMERS";
-OPENAI_KEY="YOUR OPENAI API KEY";
-SEARCHAPI_KEY="YOUR API KEY OF SERPAPI";
-DATA_PATH="./openagi_data/";
+export TRANSFORMERS_CACHE="./cache/";
+OPENAI_KEY="fugafuga";
+SEARCHAPI_KEY="hogehoge";
+DATA_PATH="./data/openagi_data/";
 DEVICE_LIST="0"; 
 EVAL_DEVICE="cuda:1";
-LLM_DEVICE="cuda:2";
+LLM_DEVICE="cuda:1";
 BATCH_SIZE=5;
-LLM_NAME="flan_t5";
-TASK="rltf";
+# LLM_NAME="flan_t5";
+LLM_NAME="gpt";
+TASK="few_shot";
 SCHEMA="benchmark";
 
 if [ $SCHEMA = "benchmark" ]
